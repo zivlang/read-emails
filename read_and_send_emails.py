@@ -42,7 +42,7 @@ for num in message_numbers[0].split()[-5:]:
     d = M.fetch(num, '(BODY[HEADER.FIELDS (SUBJECT)])')
     # num1 = base64.b64decode(num)          # unnecessary, I think
     email_content = data[0][1].decode('utf-8')
-    if 'seminar' in email_content:
+    if 'seminar' in re.search('Subject: (.*?)\r\n', email_content).group(1):
         continue
     email_date = re.search('Date: .{5}(.*?).{6}\r\n', email_content).group(1)
     email_content = re.sub('Subject: ', f'Subject: (Sent on {email_date}) ', email_content)
